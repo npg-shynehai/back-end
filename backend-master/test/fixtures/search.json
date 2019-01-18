@@ -1,0 +1,26 @@
+[
+  {
+    "model": "Person",
+    "data": {
+      "name": "Name 1",
+      "age": 25,
+      "comment": "Testing 1"
+    }
+  },
+  {
+    "model": "Person",
+    "data": {
+      "name": "Name 2",
+      "age": 26,
+      "comment": "Testing 2"
+    }
+  },
+  {
+    "model": "Person",
+    "data": {
+      "name": "Name 3",
+      "age": 25,
+      "comment": "Testing 3"
+    }
+  }
+]

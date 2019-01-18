@@ -1,0 +1,45 @@
+{
+  "common": {
+    "select_lang": "Language"
+  },
+  "form": {
+    "title": "Person Form",
+    "buttons": {
+      "add": "Add",
+      "cancel": "Cancel"
+    },
+    "input": {
+      "name": "Name",
+      "age": "Age",
+      "comment": "Comment"
+    },
+    "messages": {
+      "name_required": "The name field is required.",
+      "age_required": "The age field is required.",
+      "comment_required": "The comment field is required."
+    }
+  },
+  "table": {
+    "button": {
+      "delete": "Delete"
+    }
+  },
+  "button": {
+    "more": "More"
+  },
+  "header": {
+    "name_age": "Name and age",
+    "comment": "Comment",
+    "action": "Action"
+  },
+  "dialog" : {
+    "title" : " Do you want to delete ?",
+    "oke"   : "OK",
+    "cancel" : "Cancel"
+  },
+  "message":{
+    "save" : "Save success",
+    "error" :"Save failed"
+  }
+  
+}

@@ -1,0 +1,7 @@
+extends layout
+
+block content 
+  h1='Oops! Page not found' 
+  h1='We are sorry, but the page you requested was not found'
+  h2= error.status
+  pre #{error.stack}
