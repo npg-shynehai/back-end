@@ -8,6 +8,11 @@ export function prepend(state: ListTableState, items: any[]) {
     state.items = state.items.concat(items);
 }
 
+export function prepend1(state: ListTableState, items: any[]) {
+    state.items = [];
+    state.items = state.items.concat(items);
+}
+
 export function append(state: ListTableState, items: any[]) {
     state.items = state.items.concat(items);
 }
@@ -44,6 +49,7 @@ export function setMore(state: ListTableState, isMore: boolean) {
 }
 export default {
     prepend,
+    prepend1,
     add,
     deletePerson,
     setTableUpAge,

@@ -17,7 +17,7 @@
         </div>
       </div>
     <!--Modal-->
-    <b-modal id="modalPrevent" ref="modal"  v-bind:ok-title="$t('dialog.oke')" v-bind:title="$t('dialog.title')" v-bind:cancel-title="$t('dialog.cancel')"  @ok="handleOk(modalInfo.content,$event,modalInfo.title)"> 
+    <b-modal id="modalPrevent" ref="modal" v-bind:ok-title="$t('dialog.oke')" v-bind:title="$t('dialog.title')" v-bind:cancel-title="$t('dialog.cancel')"  @ok="handleOk(modalInfo.content,$event,modalInfo.title)"> 
         <table class="table table-hover">
           <thead>
             <tr>
@@ -216,5 +216,15 @@ border-top: 0px solid #dee2e6 !important;
   font-weight: 400;
   line-height: 1.5;
   }
+  .modal-footer {
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    display: flex;
+    justify-content: flex-start!important;
+}
+
+.modal-footer .btn-secondary{
+margin-left: 10px;
+}
 </style>
 

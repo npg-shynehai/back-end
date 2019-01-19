@@ -17,7 +17,7 @@
       <div class="form-group row">
         <label for="colFormLabelSm" class="col-sm-2 col-form-label">{{$t('form.input.name')}}</label>
          <div class="col-sm-10">
-        <b-form-input class="form-control col-sm-6" name="name" v-model="name" v-validate="{required: true, min:3, max:10, regex:/[^\p{L}\s_]+$/i }" autocomplete="false"></b-form-input>
+        <b-form-input class="form-control col-sm-6" name="name" v-model="name" v-validate="{required: true, max:10, regex:/[^\p{L}\s_]+$/i }" autocomplete="false"></b-form-input>
         <p v-if='errors.has("name")'>{{$t('form.messages.name_required')}}</p>
          </div>
       </div>
@@ -39,7 +39,7 @@
       <div class="form-group row">
         <label for="colFormLabelSm" class="col-sm-2 col-form-label"></label>
         <div class="col-sm-5" style="text-align: right">
-          <b-button class="btn btn-primary" type="submit" :disabled="errors.any()" v-show="!isLoading">{{$t('form.buttons.add')}}</b-button>
+          <b-button class="btn btn-primary" type="submit" :disabled="(this.name !='' && this.age >=15 && this.age<=150) ? false : true" v-b-modal.modalPreventform v-show="!isLoading">{{$t('form.buttons.add')}}</b-button>
           <button class="btn btn-warning" type="button" v-on:click="addEmp()" disabled v-show="isLoading">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Loading...
@@ -47,27 +47,12 @@
           <b-button style="margin-right: -10px;" class="btn btn-danger" type="reset" value="Reset">{{$t('form.buttons.cancel')}}</b-button>
         </div>
       </div>
+      <!--Modal-->
+    <b-modal id="modalPreventform" ref="modal"  v-bind:ok-title="$t('dialog.oke')" v-bind:title="$t('dialog.title')" v-bind:cancel-title="$t('dialog.cancel')"  @ok="handleOkform(view,okshow)"> 
+    </b-modal>
     </form>
     <hr>
-    <!--Modal-->
-    <b-modal id="modalPreventform" ref="modal"  v-bind:ok-title="$t('dialog.oke')" v-bind:title="$t('dialog.title')" v-bind:cancel-title="$t('dialog.cancel')"  @ok="handleOkform(modalInfo.content,$event,modalInfo.title)"> 
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">name</th>
-              <th scope="col">age</th>
-              <th scope="col">comment</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row"></th>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-    </b-modal>
+    
   </div>
   
   
@@ -91,25 +76,27 @@ const namespace: string = "personForm";
 export default class FormComponent extends Vue {
   public show = true;
 
+  public view = false;
+  public okshow = true;
+
    /* modal begin */
   public modalInfoForm = { title: "", content: "" };
 
   public resetModal() {
-    this.$root.$emit("bv::hide::modal", "modalInfo");
+    this.$root.$emit("bv::hide::modal", "modalInfoForm");
   }
 
-  public info(item: any, index: any) {
-    this.modalInfoForm.title = `${index}`;
-    this.modalInfoForm.content = item;
-    /* Show modal */
-    this.$root.$emit("bv::show::modal", "modalInfo");
-  }
+  // public infoForm(item: any) {
+  //   this.modalInfoForm.title = "Are you want add?";
+  //   this.modalInfoForm.content = item;
+  //   /* Show modal */
+  //   this.$root.$emit("bv::show::modal", "modalInfoForm");
+  // }
 
-  public handleOkform(data: any, evt: any, index: any) {
-    /* Delete */
-    this.$store.dispatch("deletePerson", [data.id, parseInt(index)]);
+  public handleOkform(view: boolean,ok: boolean) {
+    this.onSubmit(view, ok)
     /* Hide modal */
-    this.$root.$emit("bv::hide::modal", "modalInfo");
+    this.$root.$emit("bv::hide::modal", "modalInfoForm");
   }
   /* End modal */
 
@@ -129,9 +116,18 @@ export default class FormComponent extends Vue {
     private  dismissCountDown = 0
 
   /* Submit  form */
-  public onSubmit() {
-
-    this.$validator.validateAll().then(result => {
+  public onSubmit(view:boolean,ok: boolean) {
+    if(view)
+    {
+    this.modalInfoForm.title = "Are you want add?";
+    /* Show modal */
+    this.$root.$emit("bv::show::modal", "modalInfoForm");
+    }
+    console.log("view:",view)
+    console.log("ok:",ok)
+    if(ok)
+    {
+      this.$validator.validateAll().then(result => {
       if (result) {
         this.$store.dispatch("save",new Person(this.name,this.age || 15,this.escapeOutput(this.comment)))
           .then(
@@ -150,6 +146,7 @@ export default class FormComponent extends Vue {
           });
       }
     });
+    }
     
   }
   /* Set lang jp */
